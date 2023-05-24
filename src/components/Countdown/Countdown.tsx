@@ -11,12 +11,15 @@ import {
 import ProgressBar from './components/ProgressBar';
 import TimeCounter from './components/TimeCounter';
 import TimeInput from './components/TimeInput';
+import useSound from 'use-sound';
+import sound from '../Countdown/sounds/fuckyou.mp3';
 
 export default function Countdown({ title }: any) {
     const [time, setTime] = useState({ min: 0, sec: 0 });
     const [countDownIsSet, setCountDownIsSet] = useState(false);
     const [intervalId, setIntervalId]: any = useState(null);
     const [memoTime, setMemoTime] = useState({ min: 0, sec: 0 });
+    const [playActive] = useSound(sound, { volume: 0.4 });
     function inputMinutes(e: any) {
         let insertData = e.nativeEvent.data;
         if (e.nativeEvent.inputType === 'insertText' && (Number(insertData) || insertData === '0')) {
@@ -60,19 +63,20 @@ export default function Countdown({ title }: any) {
                                 clearInterval(val);
                                 return null;
                             });
+                            playActive();
                             return { min: 0, sec: 0 };
                         } else return { min: val.min, sec: val.sec - 1 };
                     });
                 }, 1000)
             );
         }
-    } 
-	function inputRange(e:any){
-		let value = parseInt(e.target.value)
-		let minutes = Math.floor(value/60)
-		let seconds = value - minutes*60
-		setTime(val=>({min:minutes,sec:seconds}))
-	}
+    }
+    function inputRange(e: any) {
+        let value = parseInt(e.target.value);
+        let minutes = Math.floor(value / 60);
+        let seconds = value - minutes * 60;
+        setTime(val => ({ min: minutes, sec: seconds }));
+    }
     function resetCountDown() {
         if (countDownIsSet) {
             setIntervalId((val: any) => {
@@ -96,11 +100,18 @@ export default function Countdown({ title }: any) {
                 <>
                     <SMinutes>
                         <TimeInput title='Минуты' value={time.min} onChange={inputMinutes} />
-                    </SMinutes> 
+                    </SMinutes>
                     <SSeconds>
-                        <TimeInput title='Секунды' value={time.sec} onChange={inputSeconds} /> 
+                        <TimeInput title='Секунды' value={time.sec} onChange={inputSeconds} />
                     </SSeconds>
-					<SRange type='range' max={60*60} min={0} step={15} value={time.min*60+time.sec} onChange={inputRange}/>
+                    <SRange
+                        type='range'
+                        max={60 * 60}
+                        min={0}
+                        step={15}
+                        value={time.min * 60 + time.sec}
+                        onChange={inputRange}
+                    />
                 </>
             )}
             <SButtonStart onClick={startCountDown}>{!intervalId ? 'Запустить' : 'Пауза'}</SButtonStart>
