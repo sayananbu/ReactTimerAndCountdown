@@ -21,30 +21,19 @@ export default function Countdown({ title }: any) {
     const [memoTime, setMemoTime] = useState({ min: 0, sec: 0 });
     const [playActive] = useSound(sound, { volume: 0.4 });
     function inputMinutes(e: any) {
-        let insertData = e.nativeEvent.data;
-        if (e.nativeEvent.inputType === 'insertText' && (Number(insertData) || insertData === '0')) {
-            setTime(val => {
-                let minValue = val.min * 10 + Number(insertData);
-                minValue = minValue > 720 ? 720 : minValue;
-                return { min: minValue, sec: val.sec };
-            });
-        } else if (e.nativeEvent.inputType.startsWith('delete') && Number(time.min)) {
-            setTime(val => ({ min: Math.floor(val.min / 10), sec: val.sec }));
-        }
+        let value = parseInt(e.target.value)
+        setTime(val=>({min:!value ? 0 : value>720 ? 720 : value,sec:val.sec}))
     }
-    function inputSeconds(e: any) {
-        let insertData = e.nativeEvent.data;
-        if (e.nativeEvent.inputType === 'insertText' && (Number(insertData) || insertData === '0')) {
-            setTime(val => {
-                let secValue = val.sec * 10 + Number(insertData);
-                secValue = secValue > 60 ? 60 : secValue;
-                return { min: val.min, sec: secValue };
-            });
-        } else if (e.nativeEvent.inputType.startsWith('delete') && Number(time.sec)) {
-            setTime(val => ({ min: val.min, sec: Math.floor(val.sec / 10) }));
-        }
+	function inputSeconds(e: any) {
+		let value = parseInt(e.target.value)
+        setTime(val=>({min:val.min,sec:!value ? 0 : value>60 ? 60 : value}))
     }
-
+	function inputRange(e: any) {
+        let value = parseInt(e.target.value);
+        let minutes = Math.floor(value / 60);
+        let seconds = value - minutes * 60;
+        setTime(val => ({ min: minutes, sec: seconds }));
+    }
     function startCountDown() {
         if (!time.min && !time.sec) return;
         if (!countDownIsSet) setMemoTime({ min: time.min, sec: time.sec });
@@ -70,12 +59,6 @@ export default function Countdown({ title }: any) {
                 }, 1000)
             );
         }
-    }
-    function inputRange(e: any) {
-        let value = parseInt(e.target.value);
-        let minutes = Math.floor(value / 60);
-        let seconds = value - minutes * 60;
-        setTime(val => ({ min: minutes, sec: seconds }));
     }
     function resetCountDown() {
         if (countDownIsSet) {
