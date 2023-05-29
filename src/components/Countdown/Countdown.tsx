@@ -26,7 +26,7 @@ export default function Countdown({ title }: any) {
     }
 	function inputSeconds(e: any) {
 		let value = parseInt(e.target.value)
-        setTime(val=>({min:val.min,sec:!value ? 0 : value>60 ? 60 : value}))
+        setTime(val=>({min:val.min,sec:!value ? 0 : value>59 ? 59 : value}))
     }
 	function inputRange(e: any) {
         let value = parseInt(e.target.value);

@@ -21,8 +21,10 @@ export default function Timer({title}:any) {
 		}
 	}
 	function reset(){
-		clearTimeout(timerId)
-		setTimerId(null)
+		setTimerId((val:any)=>{
+			clearTimeout(val)
+			return null
+		})
 		setTime(0)
 		setFirtsStart(true)
 	}
