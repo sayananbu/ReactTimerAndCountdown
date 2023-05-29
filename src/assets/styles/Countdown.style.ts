@@ -3,11 +3,11 @@ import styled from 'styled-components';
 export const SCountdown = styled.div`
     display: grid;
     grid-template-columns: auto auto;
-    grid-template-rows: 80px auto 20px 100px;
-    width: 350px;
+    grid-template-rows: 50px auto 40px 60px;
+    width: 300px;
 	justify-items: center;
     border: 1px solid cyan;
-    height: 400px;
+    height: 300px;
     border-radius: 15px;
 `;
 export const STitle = styled.h3`
@@ -105,9 +105,9 @@ export const SRange = styled.input`
 	border-radius: 10px;
 	grid-row:3;
 	grid-column:span 2;
-	
     outline: none;
     border: none;
+	align-self: center;
     height: 20px;
     width: 88%;
 `
