@@ -98,7 +98,7 @@ export default function Countdown({ title }: any) {
                 </>
             )}
             <SButtonStart onClick={startCountDown}>{!intervalId ? 'Запустить' : 'Пауза'}</SButtonStart>
-            <SButtonReset onClick={resetCountDown}>Сброс</SButtonReset>
+            <SButtonReset onClick={resetCountDown}>Сбросить</SButtonReset>
         </SCountdown>
     );
 }

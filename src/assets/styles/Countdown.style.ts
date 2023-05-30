@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SCountdown = styled.div`
     display: grid;
     grid-template-columns: auto auto;
-    grid-template-rows: 50px auto 40px 60px;
+    grid-template-rows: 80px auto 40px 60px;
     width: 300px;
 	justify-items: center;
     border: 1px solid cyan;
@@ -16,7 +16,9 @@ export const STitle = styled.h3`
     justify-self: center;
     grid-column: span 2;
 `;
-export const SSubtitle = styled.h5``;
+export const SSubtitle = styled.h5`
+	margin: 8px;
+`;
 
 export const SProgress = styled.progress`
     grid-column: span 2;
@@ -30,7 +32,7 @@ export const SProgress = styled.progress`
 	}
 `;
 export const STimeNumber = styled.span`
-    font-size: 3em;
+    font-size: 70px;
     font-weight: 700;
 `;
 export const STimeDiv = styled.div`
@@ -57,10 +59,10 @@ export const SProgressLabel = styled.label`
 
 export const SButton = styled.button`
     width: 130px;
-    height: 50px;
-    font-weight: 700;
-    font-size: 20px;
-    border-radius: 15px;
+    height: 35px;
+    font-weight: 500;
+    font-size: 18px;
+    border-radius: 10px;
     border: none;
     align-self: center;
     justify-self: center;
@@ -95,11 +97,11 @@ export const SInput = styled.input`
     border-radius: 10px;
     outline: none;
     border: none;
-    height: 50px;
+    height: 40px;
     width: 80%;
     text-align: center;
     font-weight: 600;
-    font-size: 35px;
+    font-size: 28px;
 `;
 export const SRange = styled.input`
 	border-radius: 10px;

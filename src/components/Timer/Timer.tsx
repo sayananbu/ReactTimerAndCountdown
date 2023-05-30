@@ -1,39 +1,49 @@
 import { useState } from 'react';
 import { STimer, SButtonStart, SButtonReset } from '../../assets/styles/Timer.style';
 
-export default function Timer({title}:any) {
+export default function Timer({ title }: any) {
     const [time, setTime] = useState(0);
-	const [timerId,setTimerId]:any = useState(null)
-	const [firtsStart,setFirtsStart] = useState(true)
-	function toggle() {
-		if(timerId){
-			clearTimeout(timerId)
-			setTimerId(null)
-		}
-		else{
-			setFirtsStart(false)
-			setTimerId(
-				setTimeout(function tick(){
-					setTime((time:number)=>time+1)
-					setTimerId(setTimeout(tick))
-				})
-			)
-		}
-	}
-	function reset(){
-		setTimerId((val:any)=>{
-			clearTimeout(val)
-			return null
-		})
-		setTime(0)
-		setFirtsStart(true)
-	}
+    const [timerId, setTimerId]: any = useState(null);
+    const [firtsStart, setFirtsStart] = useState(true);
+    function toggle() {
+        if (timerId) {
+			setTimerId((val:any)=>{
+				clearTimeout(val)
+				return null
+			})
+        } else {
+            setFirtsStart(false);
+            setTimerId(
+                setTimeout(function tick() {
+                    setTime((time: number) => time + 1);
+                    setTimerId(setTimeout(tick));
+                })
+            );
+        }
+    }
+    function reset() {
+        setTimerId((val: any) => {
+            clearTimeout(val);
+            return null;
+        });
+        setTime(0);
+        setFirtsStart(true);
+    }
     return (
-		<STimer>
+        <STimer>
             <h2>{title}</h2>
-            <p>Время:<br/> {Math.floor(time/(60*100))} : {Math.floor(time/(100))%60} : {(time-Math.floor(time/1000)*1000)}</p>
-			<SButtonStart onClick={toggle}>{!timerId && firtsStart ? 'Запустить': timerId ? 'Пауза' : 'Возобновить'}</SButtonStart>
-			<SButtonReset onClick={reset}>Сбросить</SButtonReset>
-		</STimer>
+            <p>
+                Время:
+                <br /> {Math.floor(time / (60 * 100))} :{' '} 
+				{(Math.floor(time / 100) % 60) <10 ? '0'+(Math.floor(time / 100) % 60):(Math.floor(time / 100) % 60) } :{' '}
+                {(time - Math.floor(time / 1000) * 1000)<10 ? '00'+(time - Math.floor(time / 1000) * 1000):
+					(time - Math.floor(time / 1000) * 1000)<100 ? '0'+(time - Math.floor(time / 1000) * 1000):(time - Math.floor(time / 1000) * 1000)
+				}
+            </p>
+            <SButtonStart onClick={toggle}>
+                {!timerId && firtsStart ? 'Запустить' : timerId ? 'Пауза' : 'Возобновить'}
+            </SButtonStart>
+            <SButtonReset onClick={reset}>Сбросить</SButtonReset>
+        </STimer>
     );
 }

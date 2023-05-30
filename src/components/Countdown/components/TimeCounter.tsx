@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types'
 import { STimeDiv, STimeNumber } from '../../../assets/styles/Countdown.style';
 
 function TimeCounter({time}:any) {
@@ -7,7 +6,7 @@ function TimeCounter({time}:any) {
         <STimeDiv>
             <STimeNumber>{time.min}</STimeNumber>
             <STimeNumber>:</STimeNumber>
-            <STimeNumber>{time.sec}</STimeNumber>
+            <STimeNumber>{time.sec<10 ? '0'+time.sec : time.sec}</STimeNumber>
         </STimeDiv>
     );
 }
