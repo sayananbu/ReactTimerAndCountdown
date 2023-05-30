@@ -29,15 +29,17 @@ export default function Timer({ title }: any) {
         setTime(0);
         setFirtsStart(true);
     }
+	let minutes = Math.floor(time / (60 * 100))
+	let seconds = Math.floor(time / 100) % 60
+	let milliseconds = time - Math.floor(time / 1000) * 1000
     return (
         <STimer>
             <h2>{title}</h2>
             <p>
                 Время:
-                <br /> {Math.floor(time / (60 * 100))} :{' '} 
-				{(Math.floor(time / 100) % 60) <10 ? '0'+(Math.floor(time / 100) % 60):(Math.floor(time / 100) % 60) } :{' '}
-                {(time - Math.floor(time / 1000) * 1000)<10 ? '00'+(time - Math.floor(time / 1000) * 1000):
-					(time - Math.floor(time / 1000) * 1000)<100 ? '0'+(time - Math.floor(time / 1000) * 1000):(time - Math.floor(time / 1000) * 1000)
+                <br /> {minutes} : {seconds <10 ? '0'+ seconds:seconds } :{' '}
+                {milliseconds<10 ? '00'+milliseconds:
+					milliseconds<100 ? '0'+milliseconds:milliseconds
 				}
             </p>
             <SButtonStart onClick={toggle}>
