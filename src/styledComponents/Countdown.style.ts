@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const SCountdown = styled.div`
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 50% 50%;
     grid-template-rows: 80px auto 40px 60px;
     width: 300px;
 	justify-items: center;
@@ -35,7 +35,7 @@ export const STimeNumber = styled.span`
     font-size: 70px;
     font-weight: 700;
 `;
-export const STimeDiv = styled.div`
+export const STimeContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,7 +43,7 @@ export const STimeDiv = styled.div`
     grid-column: span 2;
 `;
 
-export const SProgressDiv = styled.div`
+export const SProgressContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;

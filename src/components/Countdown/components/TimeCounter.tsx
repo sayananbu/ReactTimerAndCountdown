@@ -1,13 +1,15 @@
-import React from 'react';
-import { STimeDiv, STimeNumber } from '../../../assets/styles/Countdown.style';
+import { STimeContainer, STimeNumber } from '../../../styledComponents/Countdown.style';
 
-function TimeCounter({time}:any) {
+type TimeCounterProps = {
+	time:{min:number,sec:number}
+}
+function TimeCounter({time}:TimeCounterProps) {
     return (
-        <STimeDiv>
+        <STimeContainer>
             <STimeNumber>{time.min}</STimeNumber>
             <STimeNumber>:</STimeNumber>
             <STimeNumber>{time.sec<10 ? '0'+time.sec : time.sec}</STimeNumber>
-        </STimeDiv>
+        </STimeContainer>
     );
 }
 export default TimeCounter;

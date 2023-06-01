@@ -1,49 +1,59 @@
 import { useState } from 'react';
-import { STimer, SButtonStart, SButtonReset } from '../../assets/styles/Timer.style';
+import { SButtonStart, SButtonReset } from '../../styledComponents/Countdown.style';
+import { STimer } from '../../styledComponents/Timer.style';
+type ITimerProps = {
+    title: string;
+};
+type IntervalType = ReturnType<typeof setInterval> | undefined;
+export default function Timer({ title }: ITimerProps) {
+    const [time, setTime] = useState<number>(0);
+    const [timerId, setTimerId] = useState<IntervalType>(undefined);
+    const [firtsStart, setFirtsStart] = useState<boolean>(true);
 
-export default function Timer({ title }: any) {
-    const [time, setTime] = useState(0);
-    const [timerId, setTimerId]: any = useState(null);
-    const [firtsStart, setFirtsStart] = useState(true);
     function toggle() {
         if (timerId) {
-			setTimerId((val:any)=>{
-				clearTimeout(val)
-				return null
-			})
+            setTimerId((val: IntervalType) => {
+                clearInterval(val);
+                return undefined;
+            });
         } else {
             setFirtsStart(false);
             setTimerId(
-                setTimeout(function tick() {
+                setInterval(() => {
                     setTime((time: number) => time + 1);
-                    setTimerId(setTimeout(tick));
                 })
             );
         }
     }
     function reset() {
-        setTimerId((val: any) => {
-            clearTimeout(val);
-            return null;
+        setTimerId((val: IntervalType) => {
+            clearInterval(val);
+            return undefined;
         });
         setTime(0);
         setFirtsStart(true);
     }
-	let minutes = Math.floor(time / (60 * 100))
-	let seconds = Math.floor(time / 100) % 60
-	let milliseconds = time - Math.floor(time / 1000) * 1000
+    function formatDisplayTime(time: number): string[] {
+        let minutes = Math.floor(time / (60 * 100)).toString();
+        let seconds: number | string = Math.floor(time / 100) % 60;
+        let milliseconds: number | string = time - Math.floor(time / 1000) * 1000;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        milliseconds = milliseconds < 10 ? '00' + milliseconds : milliseconds < 100 ? '0' + milliseconds : milliseconds;
+        return [minutes, seconds as string, milliseconds as string];
+    }
+	function buttonStatus():string{
+		return !timerId && firtsStart ? 'Запустить' : timerId ? 'Пауза' : 'Возобновить'
+	}
+    let [minutes, seconds, milliseconds] = formatDisplayTime(time);
     return (
         <STimer>
             <h2>{title}</h2>
             <p>
                 Время:
-                <br /> {minutes} : {seconds <10 ? '0'+ seconds:seconds } :{' '}
-                {milliseconds<10 ? '00'+milliseconds:
-					milliseconds<100 ? '0'+milliseconds:milliseconds
-				}
+                <br /> {minutes} : {seconds} : {milliseconds}
             </p>
             <SButtonStart onClick={toggle}>
-                {!timerId && firtsStart ? 'Запустить' : timerId ? 'Пауза' : 'Возобновить'}
+                {buttonStatus()}
             </SButtonStart>
             <SButtonReset onClick={reset}>Сбросить</SButtonReset>
         </STimer>

@@ -1,12 +1,16 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { SProgress, SProgressDiv, SProgressLabel } from '../../../assets/styles/Countdown.style';
+import {SProgressLabel, SProgress, SProgressContainer } from '../../../styledComponents/Countdown.style';
 
- function ProgressBar({min,sec,memoTime}:any) {
+type ProgressBarProps = {
+	min:number,
+	sec:number,
+	memoTime:{min:number,sec:number}
+}
+export default function ProgressBar({min,sec,memoTime}:ProgressBarProps) {
 	let fullTimeSecs = min * 60 + sec
 	let memoFullTimeSecs = memoTime.min * 60 + memoTime.sec
     return (
-        <SProgressDiv>
+        <SProgressContainer>
             <SProgressLabel>
                 {100 - Math.floor(fullTimeSecs * 100 / memoFullTimeSecs)}%
             </SProgressLabel>
@@ -14,7 +18,7 @@ import { SProgress, SProgressDiv, SProgressLabel } from '../../../assets/styles/
                 max={memoFullTimeSecs}
                 value={memoFullTimeSecs - fullTimeSecs}
             />
-        </SProgressDiv>
+        </SProgressContainer>
     );
 }
 ProgressBar.propTypes = {
@@ -26,4 +30,3 @@ ProgressBar.defaultProps = {
 	min:0,
 	sec:0
 }
-export default ProgressBar

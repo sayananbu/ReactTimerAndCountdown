@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/ReactTimerAndCountdown/static/js/main.753acab5.js",
+    "main.js": "/ReactTimerAndCountdown/static/js/main.b1068d1c.js",
     "static/js/845.cfbd7d68.chunk.js": "/ReactTimerAndCountdown/static/js/845.cfbd7d68.chunk.js",
     "static/media/fuckyou.mp3": "/ReactTimerAndCountdown/static/media/fuckyou.a7475f11ecbc42e1fa98.mp3",
     "index.html": "/ReactTimerAndCountdown/index.html",
-    "main.753acab5.js.map": "/ReactTimerAndCountdown/static/js/main.753acab5.js.map",
+    "main.b1068d1c.js.map": "/ReactTimerAndCountdown/static/js/main.b1068d1c.js.map",
     "845.cfbd7d68.chunk.js.map": "/ReactTimerAndCountdown/static/js/845.cfbd7d68.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.753acab5.js"
+    "static/js/main.b1068d1c.js"
   ]
 }

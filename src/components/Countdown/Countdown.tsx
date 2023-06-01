@@ -1,46 +1,54 @@
-import { useState } from 'react';
-import {
-    SButtonReset,
-    SButtonStart,
-    SCountdown,
-    SMinutes,
-    SRange,
-    SSeconds,
-    STitle,
-} from '../../assets/styles/Countdown.style';
+import { ChangeEvent, useState } from 'react';
 import ProgressBar from './components/ProgressBar';
 import TimeCounter from './components/TimeCounter';
 import TimeInput from './components/TimeInput';
 import useSound from 'use-sound';
 import sound from '../Countdown/sounds/fuckyou.mp3';
+import {
+    SCountdown,
+    STitle,
+    SMinutes,
+    SSeconds,
+    SRange,
+    SButtonStart,
+    SButtonReset,
+} from '../../styledComponents/Countdown.style';
+type CountdownProps = {
+    title: string;
+};
+type TimeType = { min: number; sec: number };
+type IntervalType = ReturnType<typeof setInterval> | undefined;
 
-export default function Countdown({ title }: any) {
-    const [time, setTime] = useState({ min: 0, sec: 0 });
-    const [countDownIsSet, setCountDownIsSet] = useState(false);
-    const [intervalId, setIntervalId]: any = useState(null);
-    const [memoTime, setMemoTime] = useState({ min: 0, sec: 0 });
+export default function Countdown({ title }: CountdownProps) {
+    const [time, setTime] = useState<TimeType>({ min: 0, sec: 0 });
+    const [countDownIsSet, setCountDownIsSet] = useState<boolean>(false);
+    const [intervalId, setIntervalId] = useState<IntervalType>(undefined);
+    const [memoTime, setMemoTime] = useState<TimeType>({ min: 0, sec: 0 });
     const [playActive] = useSound(sound, { volume: 0.4 });
-    function inputMinutes(e: any) {
-        let value = parseInt(e.target.value)
-        setTime(val=>({min:!value ? 0 : value>720 ? 720 : value,sec:val.sec}))
+
+    function inputMinutes(e: ChangeEvent<HTMLInputElement>) {
+        let value = parseInt(e.target.value);
+        setTime(val => ({ min: !value ? 0 : value > 720 ? 720 : value, sec: val.sec }));
     }
-	function inputSeconds(e: any) {
-		let value = parseInt(e.target.value)
-        setTime(val=>({min:val.min,sec:!value ? 0 : value>59 ? 59 : value}))
+    function inputSeconds(e: ChangeEvent<HTMLInputElement>) {
+        let value = parseInt(e.target.value);
+        setTime((val: TimeType) => ({ min: val.min, sec: !value ? 0 : value > 59 ? 59 : value }));
     }
-	function inputRange(e: any) {
+    function inputRange(e: ChangeEvent<HTMLInputElement>) {
         let value = parseInt(e.target.value);
         let minutes = Math.floor(value / 60);
         let seconds = value - minutes * 60;
-        setTime(val => ({ min: minutes, sec: seconds }));
+        setTime({ min: minutes, sec: seconds });
     }
     function startCountDown() {
         if (!time.min && !time.sec) return;
         if (!countDownIsSet) setMemoTime({ min: time.min, sec: time.sec });
         setCountDownIsSet(true);
         if (intervalId) {
-            clearInterval(intervalId);
-            setIntervalId(null);
+            setIntervalId(val => {
+                clearInterval(val);
+                return undefined;
+            });
         } else {
             setIntervalId(
                 setInterval(() => {
@@ -48,9 +56,9 @@ export default function Countdown({ title }: any) {
                         if (val.min && !val.sec) {
                             return { min: val.min - 1, sec: 59 };
                         } else if (!(val.min + val.sec - 1)) {
-                            setIntervalId((val: any) => {
+                            setIntervalId((val: IntervalType) => {
                                 clearInterval(val);
-                                return null;
+                                return undefined;
                             });
                             playActive();
                             return { min: 0, sec: 0 };
@@ -62,9 +70,9 @@ export default function Countdown({ title }: any) {
     }
     function resetCountDown() {
         if (countDownIsSet) {
-            setIntervalId((val: any) => {
+            setIntervalId((val: IntervalType) => {
                 clearInterval(val);
-                return null;
+                return undefined;
             });
             setCountDownIsSet(false);
             setTime({ min: memoTime.min, sec: memoTime.sec });
@@ -97,7 +105,9 @@ export default function Countdown({ title }: any) {
                     />
                 </>
             )}
-            <SButtonStart onClick={startCountDown}>{!intervalId ? 'Запустить' : 'Пауза'}</SButtonStart>
+            {time.min + time.sec !== 0 && (
+                <SButtonStart onClick={startCountDown}>{!intervalId ? 'Запустить' : 'Пауза'}</SButtonStart>
+            )}
             <SButtonReset onClick={resetCountDown}>Сбросить</SButtonReset>
         </SCountdown>
     );

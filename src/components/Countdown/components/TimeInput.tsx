@@ -1,5 +1,4 @@
-import React from 'react';
-import { SSubtitle, SInput } from '../../../assets/styles/Countdown.style';
+import { SSubtitle, SInput } from '../../../styledComponents/Countdown.style';
 
 export default function TimeInput(props:any) {
     return (
