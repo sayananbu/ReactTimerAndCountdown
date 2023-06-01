@@ -56,7 +56,7 @@ export default function Countdown({ title }: CountdownProps) {
                         if (val.min && !val.sec) {
                             return { min: val.min - 1, sec: 59 };
                         } else if (!(val.min + val.sec - 1)) {
-                            setIntervalId((val: IntervalType) => {
+                            setIntervalId(val => {
                                 clearInterval(val);
                                 return undefined;
                             });
@@ -70,7 +70,7 @@ export default function Countdown({ title }: CountdownProps) {
     }
     function resetCountDown() {
         if (countDownIsSet) {
-            setIntervalId((val: IntervalType) => {
+            setIntervalId(val => {
                 clearInterval(val);
                 return undefined;
             });
